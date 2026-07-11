@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>🐾 COZY PAWS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Nunito:wght@700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-main: #FFF8F0;      /* Warm cream */
+      --text-main: #5C4033;    /* Mocha brown */
+      --text-light: #8C6B5D;   
+      --shell-bg: #FFDFD3;     /* Soft peach/pink */
+      --shell-border: #E0BBA1; /* Warm beige */
+      --screen-bg: #FFFCF5;    /* Off-white for cards */
+      --sky-blue: #D4F1F9;
+      --grass-green: #B9FBC0;
+      --cozy-pink: #FFB7B2;
+      --cozy-yellow: #FDFD96;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      background-image: radial-gradient(var(--shell-border) 1px, transparent 1px);
+      background-size: 20px 20px;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'VT323', monospace;
+      color: var(--text-main);
+      padding: 12px;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .app {
+      max-width: 480px;
+      width: 100%;
+      background: var(--shell-bg);
+      border: 4px solid var(--shell-border);
+      box-shadow: 8px 8px 0px rgba(224, 187, 161, 0.5);
+      border-radius: 24px;
+      padding: 16px 16px 20px;
+      position: relative;
+    }
+
+    /* TOPBAR */
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 4px 0 14px 0;
+      border-bottom: 4px dashed var(--shell-border);
+      margin-bottom: 14px;
+      position: relative;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logoIcon {
+      width: 50px;
+      height: 50px;
+      background: var(--screen-bg);
+      border: 4px solid var(--shell-border);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      transform: rotate(-4deg);
+    }
+
+    .logo h1 {
+      font-size: 24px;
+      color: var(--text-main);
+      letter-spacing: 1px;
+      line-height: 1.1;
+    }
+
+    .logo p {
+      font-size: 14px;
+      color: var(--text-light);
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+    }
+
+    #soundBtn {
+      width: 50px;
+      height: 50px;
+      background: var(--screen-bg);
+      border: 4px solid var(--shell-border);
+      border-radius: 12px;
+      font-size: 24px;
+      cursor: pointer;
+      transition: 0.1s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 2px 4px 0px var(--shell-border);
+    }
+
+    #soundBtn:active {
+      transform: translate(2px, 4px);
+      box-shadow: 0px 0px 0px var(--shell-border);
+    }
+
+    /* STATS CARDS */
+    .stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .card {
+      background: var(--screen-bg);
+      border: 4px solid var(--shell-border);
+      border-radius: 12px;
+      padding: 12px 8px;
+      text-align: center;
+      box-shadow: inset 2px 2px 0px rgba(0,0,0,0.03);
+    }
+
+    .card h3 {
+      color: var(--text-light);
+      font-size: 16px;
+      margin-bottom: 2px;
+    }
+
+    .card h2 {
+      font-size: 32px;
+      color: var(--text-main);
+    }
+
+    /* FRIENDSHIP BAR */
+    .friendshipBar {
+      background: var(--screen-bg);
+      border: 4px solid var(--shell-border);
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 16px;
+      text-align: center;
+      box-shadow: inset 2px 2px 0px rgba(0,0,0,0.03);
+    }
+
+    .friendshipBar h3 {
+      font-size: 16px;
+      color: var(--text-light);
+      margin-bottom: 8px;
+    }
+
+    #hearts {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    #hearts span {
+      font-size: 28px;
+      transition: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      line-height: 1;
+      display: inline-block;
+      opacity: 0.5;
+      filter: grayscale(1);
+    }
+
+    #hearts span.active {
+      opacity: 1;
+      filter: grayscale(0);
+      transform: scale(1.15);
+    }
+
+    /* STAGE (Cozy Environment) */
+    .stage {
+      position: relative;
+      margin-bottom: 16px;
+      background: var(--sky-blue);
+      border: 4px solid var(--shell-border);
+      border-radius: 16px;
+      height: 280px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    /* Grass Floor */
+    .stage::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 35%;
+      background: var(--grass-green);
+      border-top: 4px solid #95D5A2;
+      pointer-events: none;
+    }
+
+    .cloud {
+      position: absolute;
+      background: #FFF;
+      border-radius: 20px;
+      opacity: 0.8;
+      animation: cloudMove 16s linear infinite;
+    }
+
+    .cloud::before, .cloud::after {
+      content: '';
+      position: absolute;
+      background: #FFF;
+      border-radius: 50%;
+    }
+
+    .cloud:nth-child(1) { 
+      top: 30px; left: -60px; width: 60px; height: 20px; 
+    }
+    .cloud:nth-child(1)::before { top: -10px; left: 10px; width: 30px; height: 30px; }
+    .cloud:nth-child(1)::after { top: -5px; right: 10px; width: 20px; height: 20px; }
+
+    .cloud:nth-child(2) { 
+      top: 70px; left: -80px; width: 80px; height: 24px; animation-duration: 22s; animation-delay: 4s;
+    }
+    .cloud:nth-child(2)::before { top: -12px; left: 15px; width: 35px; height: 35px; }
+    .cloud:nth-child(2)::after { top: -8px; right: 15px; width: 25px; height: 25px; }
+
+    @keyframes cloudMove {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(500px); }
+    }
+
+    .cat {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 20;
+      width: 160px;
+      display: block;
+      transform-origin: center bottom;
+      transition: 0.08s;
+      user-select: none;
+      -webkit-user-drag: none;
+      animation: idle 3s ease-in-out infinite;
+      filter: drop-shadow(0px 6px 0px rgba(0,0,0,0.1));
+    }
+
+    @keyframes idle {
+      0% { transform: translateX(-50%) translateY(0px) scaleY(1); }
+      50% { transform: translateX(-50%) translateY(2px) scaleY(0.98); }
+      100% { transform: translateX(-50%) translateY(0px) scaleY(1); }
+    }
+
+    .cat.pet { animation: petBounce 0.2s; }
+    @keyframes petBounce {
+      0% { transform: translateX(-50%) scale(1); }
+      40% { transform: translateX(-50%) scale(1.05, 0.90); }
+      100% { transform: translateX(-50%) scale(1); }
+    }
+
+    .cat.happy { animation: happy 0.5s; }
+    @keyframes happy {
+      0% { transform: translateX(-50%) translateY(0); }
+      30% { transform: translateX(-50%) translateY(-15px); }
+      60% { transform: translateX(-50%) translateY(0); }
+      100% { transform: translateX(-50%) translateY(0); }
+    }
+
+    /* Speech Bubble */
+    .speech {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(10px);
+      background: #FFF;
+      border: 4px solid var(--shell-border);
+      border-radius: 16px;
+      padding: 10px 16px;
+      font-size: 20px;
+      color: var(--text-main);
+      z-index: 40;
+      opacity: 0;
+      transition: 0.15s;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    .speech.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .speech::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      margin-left: -8px;
+      width: 0;
+      height: 0;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-top: 10px solid var(--shell-border);
+    }
+
+    .speech::before {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 50%;
+      margin-left: -4px;
+      width: 0;
+      height: 0;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 6px solid #FFF;
+      z-index: 2;
+    }
+
+    /* SELECTOR */
+    .selector {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .catCard {
+      background: var(--screen-bg);
+      border: 4px solid var(--shell-border);
+      border-radius: 12px;
+      padding: 8px 4px 4px;
+      cursor: pointer;
+      transition: all 0.1s ease-in-out;
+      text-align: center;
+      position: relative;
+    }
+
+    .catCard:hover {
+      background: #FFF;
+      transform: translateY(-2px);
+    }
+
+    .catCard.active {
+      background: var(--cozy-pink);
+      border-color: var(--text-light);
+    }
+
+    .catCard img {
+      width: 100%;
+      max-width: 56px;
+      display: block;
+      margin: 0 auto 4px;
+      filter: drop-shadow(0px 3px 0px rgba(0,0,0,0.1));
+    }
+
+    .catCard p {
+      font-size: 16px;
+      color: var(--text-main);
+    }
+
+    /* Particles & Floating Text */
+    .particle, .floating-text {
+      position: fixed;
+      pointer-events: none;
+      z-index: 999;
+      font-family: 'VT323', monospace;
+    }
+
+    .floating-text {
+      font-size: 24px;
+      color: var(--text-main);
+      font-weight: bold;
+      animation: floatDamage 0.8s ease-out forwards;
+    }
+
+    @keyframes floatDamage {
+      0% { opacity: 1; transform: translateY(0) scale(1); }
+      100% { opacity: 0; transform: translateY(-40px) scale(1.2); }
+    }
+
+    .particle {
+      font-size: 24px;
+      animation: floatParticle 0.8s ease-out forwards;
+    }
+
+    @keyframes floatParticle {
+      0% { opacity: 1; transform: translateY(0) scale(0.7) rotate(0deg); }
+      100% { opacity: 0; transform: translateY(-80px) scale(1.5) rotate(20deg); }
+    }
+
+    .mini-hp {
+      font-size: 18px;
+      color: var(--text-main);
+      margin-top: 8px;
+    }
+
+    @media (max-width: 480px) {
+      .app { padding: 12px; border-radius: 16px; }
+      .logo h1 { font-size: 20px; }
+      .stage { height: 220px; }
+      .cat { width: 130px; bottom: 10px; }
+      .card h2 { font-size: 24px; }
+      .logoIcon, #soundBtn { width: 40px; height: 40px; font-size: 20px; }
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="logo">
+      <div class="logoIcon">🐾</div>
+      <div>
+        <h1>COZY PAWS</h1>
+        <p>pet · relax · love</p>
+      </div>
+    </div>
+    <button id="soundBtn">🔊</button>
+  </header>
+
+  <section class="stats">
+    <div class="card"><h3>PATS</h3><h2 id="petCount">0</h2></div>
+    <div class="card"><h3>LEVEL</h3><h2 id="levelDisplay">1</h2></div>
+  </section>
+
+  <section class="friendshipBar">
+    <h3>BOND LEVEL</h3>
+    <div id="hearts">
+      <span>❤️</span><span>❤️</span><span>❤️</span><span>❤️</span><span>❤️</span>
+    </div>
+    <div class="mini-hp">
+      <span id="friendship">0%</span> Complete
+    </div>
+  </section>
+
+  <section class="stage" id="stageContainer">
+    <div class="cloud"></div>
+    <div class="cloud"></div>
+    <div class="speech" id="speech">meow~</div>
+    <img id="cat" src="image_38c508.png" draggable="false" class="cat" alt="cat" />
+  </section>
+
+  <section class="selector">
+    <div class="catCard active">
+      <img src="image_38c508.png" alt="Tabby" />
+      <p>Tabby</p>
+    </div>
+    <div class="catCard">
+      <img src="image_38c1ff.png" alt="Smoke" />
+      <p>Smoke</p>
+    </div>
+    <div class="catCard">
+      <img src="image_38c529.png" alt="Midnight" />
+      <p>Night</p>
+    </div>
+    <div class="catCard">
+      <img src="image_38c4e9.png" alt="Calico" />
+      <p>Calico</p>
+    </div>
+  </section>
+</div>
+
+<script>
+  (function() {
+    const stage = document.getElementById('stageContainer');
+    const cat = document.getElementById('cat');
+    const petCountEl = document.getElementById('petCount');
+    const friendshipEl = document.getElementById('friendship');
+    const levelEl = document.getElementById('levelDisplay');
+    const hearts = document.querySelectorAll('#hearts span');
+    const speech = document.getElementById('speech');
+    const cards = document.querySelectorAll('.catCard');
+    const soundBtn = document.getElementById('soundBtn');
+
+    // Load saved data from localStorage
+    let pats = parseInt(localStorage.getItem('cozyPaws_pats')) || 0;
+    let soundEnabled = true;
+    let speechTimer = null;
+    let audioCtx = null;
+
+    const phrases = ['meow~', 'purrrrr', 'mrrp?', 'nya', '*headbutt*', '❤️', 'so soft', 'pet me!'];
+
+    function getFriendship() { return Math.min(100, pats); }
+    function getLevel() { return Math.floor(pats / 20) + 1; }
+
+    function updateHearts(val) {
+      const filled = Math.floor(val / 20);
+      hearts.forEach((el, i) => {
+        if (i < filled) { el.classList.add('active'); }
+        else { el.classList.remove('active'); }
+      });
+    }
+
+    function updateUI() {
+      const f = getFriendship();
+      const lv = getLevel();
+      petCountEl.textContent = pats;
+      friendshipEl.textContent = f + '%';
+      levelEl.textContent = lv;
+      updateHearts(f);
+      localStorage.setItem('cozyPaws_pats', pats);
+    }
+
+    function showSpeech(text) {
+      speech.textContent = text || phrases[Math.floor(Math.random() * phrases.length)];
+      speech.classList.add('show');
+      clearTimeout(speechTimer);
+      speechTimer = setTimeout(() => speech.classList.remove('show'), 1600);
+    }
+
+    function spawnElement(x, y, text, cls) {
+      const el = document.createElement('div');
+      el.className = cls;
+      el.textContent = text;
+      el.style.left = x + 'px';
+      el.style.top = y + 'px';
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 900);
+    }
+
+    function playPop() {
+      if (!soundEnabled) return;
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine'; // Changed from square to sine for a softer "boop" sound
+        osc.frequency.setValueAtTime(600, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(400, audioCtx.currentTime + 0.1);
+        gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.1);
+      } catch (_) {}
+    }
+
+    function petCat(e) {
+      pats++;
+      updateUI();
+      playPop();
+
+      cat.classList.remove('pet', 'happy');
+      void cat.offsetWidth;
+
+      let x = e.clientX;
+      let y = e.clientY;
+      if (e.touches && e.touches.length > 0) {
+        x = e.touches[0].clientX;
+        y = e.touches[0].clientY;
+      }
+
+      spawnElement(x - 10, y - 20, '+1', 'floating-text');
+
+      const oldLevel = Math.floor((pats - 1) / 20) + 1;
+      const newLevel = getLevel();
+      if (newLevel > oldLevel) {
+        cat.classList.add('happy');
+        showSpeech('level up! yay!');
+        const rect = cat.getBoundingClientRect();
+        for (let i = 0; i < 6; i++) {
+          setTimeout(() => {
+            spawnElement(
+              rect.left + rect.width/2 + (Math.random()-0.5)*100,
+              rect.top + rect.height/2 + (Math.random()-0.5)*60,
+              ['🌸', '✨', '💖', '🌼'][Math.floor(Math.random()*4)],
+              'particle'
+            );
+          }, i * 80);
+        }
+      } else if (Math.random() > 0.7) {
+        cat.classList.add('happy');
+        showSpeech('so happy~');
+      } else {
+        cat.classList.add('pet');
+        showSpeech();
+      }
+
+      const rect = cat.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const emojis = ['✨', '🌸', '💖', '🐾'];
+      const rnd = emojis[Math.floor(Math.random() * emojis.length)];
+      spawnElement(cx - 20 + Math.random() * 40, cy - 10 + Math.random() * 20, rnd, 'particle');
+    }
+
+    stage.addEventListener('mousedown', petCat);
+    stage.addEventListener('touchstart', (e) => { 
+        e.preventDefault(); 
+        petCat(e); 
+    }, { passive: false });
+
+    function selectCat(card) {
+      cards.forEach(c => c.classList.remove('active'));
+      card.classList.add('active');
+      const img = card.querySelector('img');
+      if (img) {
+        cat.src = img.src;
+        cat.classList.remove('pet', 'happy');
+        void cat.offsetWidth;
+        cat.classList.add('pet');
+        showSpeech('new friend!');
+      }
+    }
+
+    cards.forEach(card => {
+      card.addEventListener('click', () => selectCat(card));
+    });
+
+    soundBtn.addEventListener('click', () => {
+      soundEnabled = !soundEnabled;
+      soundBtn.textContent = soundEnabled ? '🔊' : '🔇';
+      if (soundEnabled && !audioCtx) {
+        try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch(_) {}
+      }
+    });
+
+    updateUI();
+    showSpeech(pats > 0 ? 'welcome back~' : 'hello there!');
+    setTimeout(() => speech.classList.remove('show'), 2000);
+  })();
+</script>
+</body>
+</html>
